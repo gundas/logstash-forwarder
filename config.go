@@ -9,8 +9,13 @@ import (
 )
 
 type Config struct {
+  General GeneralConfig `json:general`
   Network NetworkConfig `json:network`
   Files   []FileConfig  `json:files`
+}
+
+type GeneralConfig struct {
+  SinceDBPath string `json:"sincedb path"`
 }
 
 type NetworkConfig struct {
@@ -59,6 +64,18 @@ func LoadConfig(path string) (config Config, err error) {
     log.Printf("Failed unmarshalling json: %s\n", err)
     return
   }
+
+  if config.General.SinceDBPath == "" {
+    config.General.SinceDBPath = ".logstash-forwarder"
+  }
+
+  // Early detection on an unwritable sincedb
+  file, err := File.OpenFile(config.General.SinceDBPath, os.O_RDWR | os.O_CREATE, 0640)
+  if err != nil {
+    log.Printf("The sincedb file, %s, is not writable. Error was: %s\n", config.General.SinceDBPath, err)
+    return
+  }
+  
 
   if config.Network.Timeout == 0 {
     config.Network.Timeout = 15

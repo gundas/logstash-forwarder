@@ -4,7 +4,7 @@ import (
   "log"
 )
 
-func Registrar(new_state map[string]*FileState, input chan []*FileEvent) {
+func Registrar(config Config, new_state map[string]*FileState, input chan []*FileEvent) {
   state := new_state
   for events := range input {
     log.Printf("Registrar received %d events\n", len(events))
@@ -26,7 +26,7 @@ func Registrar(new_state map[string]*FileState, input chan []*FileEvent) {
     }
 
     if len(state) > 0 {
-      WriteRegistry(state, ".logstash-forwarder")
+      WriteRegistry(state, config.General.SinceDBPath)
     }
   }
 }

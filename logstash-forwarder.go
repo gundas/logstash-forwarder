@@ -111,5 +111,5 @@ func main() {
   go Publishv1(publisher_chan, registrar_chan, &config.Network)
 
   // registrar records last acknowledged positions in all files.
-  Registrar(new_state, registrar_chan)
+  Registrar(config, new_state, registrar_chan)
 } /* main */
