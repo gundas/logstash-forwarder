@@ -32,8 +32,7 @@ describe "logstash-forwarder gem" do
     # Allow 60 seconds
     Timeout::timeout(60) do
       5000.times do |i|
-        puts "Iteration #{i}"
-        @client.write "message" => "gem line test #{i}", "host" => @host, "file" => "gemfile.log"
+        @client.write "line" => "gem line test #{i}", "host" => @host, "file" => "gemfile.log"
       end
     end
 
