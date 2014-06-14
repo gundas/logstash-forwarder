@@ -4,7 +4,7 @@ require "openssl"
 require "zlib"
 
 module Lumberjack
-  
+
   SEQUENCE_MAX = (2**(0.size * 8 -2) -1)
 
   class Client
@@ -32,11 +32,8 @@ module Lumberjack
         raise "Could not connect to any hosts" if addrs.empty?
         opts = @opts
         opts[:address] = addrs.pop
-        puts "connect #{opts[:address]}"
         Lumberjack::Socket.new(opts)
-        puts "connected"
       rescue *[Errno::ECONNREFUSED,SocketError] => e
-        puts e
         retry
       end
     end
@@ -79,9 +76,8 @@ module Lumberjack
       tcp_socket = TCPSocket.new(@opts[:address], @opts[:port])
       openssl_cert = OpenSSL::X509::Certificate.new(File.read(@opts[:ssl_certificate]))
       @socket = OpenSSL::SSL::SSLSocket.new(tcp_socket)
-      puts "socket connecting"
+
       @socket.connect
-      puts "socket connected"
 
       #if @socket.peer_cert.to_s != openssl_cert.to_s
       #  raise "Client and server certificates do not match."
@@ -90,7 +86,7 @@ module Lumberjack
       @socket.syswrite(["1", "W", @window_size].pack("AAN"))
     end
 
-    private 
+    private
     def inc
       @sequence = 0 if @sequence+1 > Lumberjack::SEQUENCE_MAX
       @sequence += 1
