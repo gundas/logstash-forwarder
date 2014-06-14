@@ -12,7 +12,6 @@ describe "logstash-forwarder gem" do
   end
 
   def startup
-        puts "Startup #{@server.port}"
     logger = Logger.new(STDOUT)
     logger.level = Logger::DEBUG
 
@@ -23,7 +22,6 @@ describe "logstash-forwarder gem" do
       :port => @server.port,
       :logger => logger
     )
-        puts "Started"
   end
 
   it "should send and receive events" do
