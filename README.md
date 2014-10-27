@@ -7,7 +7,7 @@ The original [logstash-forwarder](https://github.com/elasticsearch/logstash-forw
  
 Driskell did a very nice job fixing all the issues on Windows on his [fork](https://github.com/driskell/logstash-forwarder), however his fixes were not merged into the Elastic Search logstash-forwarder (I don't know why). Driskell has abandoned his work on logstash-forwarder and started developing new [Log Courier](https://github.com/driskell/log-courier).
 
-I've made this fork because I wanted to use the Driskell's version of logstash-forwarder, since in fixes Windows issues and has a functional multiline codec (the multiline codec in Logstash is still problematic, because it waits for the next line to decide if the event has finished or not).
+I've made this fork because I wanted to use the Driskell's version of logstash-forwarder, since it fixes Windows issues and has a functional multiline codec (the multiline codec in Logstash is still problematic, because it waits for the next line to decide if the event has finished or not).
 However, Driskell version of the logstash-forwared had a few problems which needed to be fixed:
  
  * compilation on Windows was broken
